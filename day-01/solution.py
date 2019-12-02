@@ -2,14 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-1/2 - Fuel Calculator
-https://adventofcode.com/2019/day/1#part2
+day 1 - Fuel Calculator
+https://adventofcode.com/2019/day/1
 """
 
 
 def fuel(mass):
     """ Calculates recursively the amount of fuel needed for the given mass. """
-
     total = 0
 
     while True:
@@ -20,6 +19,11 @@ def fuel(mass):
             break
 
     return total
+
+
+def fuel_part1(mass):
+    """ Calculates the amount of fuel needed for the given mass. """
+    return mass // 3 - 2
 
 
 def readable(file):
