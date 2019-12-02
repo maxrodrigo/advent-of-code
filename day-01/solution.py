@@ -7,41 +7,42 @@ https://adventofcode.com/2019/day/1
 """
 
 
-def fuel(mass):
+def fuel_total(m):
     """ Calculates recursively the amount of fuel needed for the given mass. """
     total = 0
 
     while True:
-        mass = mass // 3 - 2
-        if mass > 0:
-            total += mass
+        m = fuel(m)
+        if m > 0:
+            total += m
         else:
             break
 
     return total
 
 
-def fuel_part1(mass):
+def fuel(m):
     """ Calculates the amount of fuel needed for the given mass. """
-    return mass // 3 - 2
-
-
-def readable(file):
-    total = 0
-    # read is open's default mode
-    with open(file) as f:
-        for l in f:
-            mass = int(l.strip())
-            module_fuel = fuel(mass)
-            total = total + module_fuel
-    return total
-
-
-def compact(f):
-    return sum([fuel(int(l.strip())) for l in open(f)])
+    return m // 3 - 2
 
 
 if __name__ == "__main__":
     f = "./day-01/input.txt"
-    fuel = compact(f)
-    print(fuel)
+    masses = [int(m.strip()) for m in open(f)]
+
+    # part 1
+    assert fuel(12) == 2
+    assert fuel(14) == 2
+    assert fuel(1969) == 654
+    assert fuel(100756) == 33583
+
+    req = sum([fuel(m) for m in masses])
+    print(req)
+
+    # part 2
+    assert fuel_total(14) == 2
+    assert fuel_total(1969) == 966
+    assert fuel_total(100756) == 50346
+
+    req = sum([fuel_total(m) for m in masses])
+    print(req)
