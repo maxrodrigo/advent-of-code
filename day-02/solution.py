@@ -6,21 +6,28 @@ Day 2: 1202 Program Alarm
 https://adventofcode.com/2019/day/2
 """
 
+from itertools import product
 
-def nic(ic):
+
+def nic(intcode, n=None, v=None):
     """ Intcode (ic) interpreter."""
+    # Grab a copy of intcode since list are mutable.
+    ic = intcode[:]
+
+    ic[1] = n or ic[1]
+    ic[2] = v or ic[2]
+
     for i in range(0, len(ic), 4):
         opcode = ic[i]
 
         if opcode == 99:
             return ic
         elif opcode == 1 or opcode == 2:
-            fx = ic[i + 1]  # first input index
-            sx = ic[i + 2]  # second input index
-            rx = ic[i + 3]  # result index
+            fa = ic[i + 1]  # first param address
+            sa = ic[i + 2]  # second param address
+            ra = ic[i + 3]  # result address
 
-            ic[rx] = ic[fx] + ic[sx] if opcode == 1 else ic[fx] * ic[sx]
-
+            ic[ra] = ic[fa] + ic[sa] if opcode == 1 else ic[fa] * ic[sa]
     return ic
 
 
@@ -34,8 +41,15 @@ if __name__ == "__main__":
     intcode = open(f).readline().strip().split(",")
     intcode = list(map(int, intcode))
 
-    # Restore code
-    intcode[1] = 12
-    intcode[2] = 2
-    out = nic(intcode)
-    print(out[0])
+    # part 1
+    out = nic(intcode, 12, 2)
+    print(f"Part 1: {out[0]}")
+
+    # part 2
+    # Generate all possible input tuples
+    for n, v in product(range(0, 100), range(0, 100)):
+        out = nic(intcode, n, v)
+        if out[0] == 19690720:
+            res = 100 * n + v
+            print(f"Part 2: {res}")
+            break
