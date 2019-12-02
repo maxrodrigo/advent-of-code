@@ -24,6 +24,5 @@ def compact(f):
 
 if __name__ == "__main__":
     f = "./day-01/input.txt"
-    r = readable(f)
-    c = compact(f)
-    print(f"r: {r} | c: {c}")
+    fuel = compact(f)
+    print(fuel)
