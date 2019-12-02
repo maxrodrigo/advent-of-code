@@ -15,7 +15,7 @@ def fuel(mass):
     while True:
         mass = mass // 3 - 2
         if mass > 0:
-            total += mass || 0
+            total += mass
         else:
             break
 
